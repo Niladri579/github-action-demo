@@ -20,8 +20,9 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn clean install
+        
   store-artifact:
-    needs: deploy
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +39,7 @@ jobs:
         run: echo "Hello World!"
         
   approval:
-    needs: deploy
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -58,7 +59,7 @@ jobs:
     name: deploy
     
     runs-on: ubuntu-latest
-    needs: build
+    needs: approval
     environment: 
         name: dev
     steps:

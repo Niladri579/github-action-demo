@@ -56,7 +56,7 @@ jobs:
           MS_TEAMS_WEBHOOK: https://oge4.webhook.office.com/webhookb2/25189a29-6fae-4d60-8046-ff44234cf175@b6ef53c4-f4aa-4ae4-9e6e-e93e9610bfd3/IncomingWebhook/af44140c6df74981841ab5a8da4d4949/49e6f35b-4b49-40ce-bccf-072c32d72370
 
   deploy:
-    name: deploy
+    name: deploy to dev
     
     runs-on: ubuntu-latest
     needs: approval

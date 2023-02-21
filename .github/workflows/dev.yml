@@ -1,0 +1,81 @@
+name: DEV Workflow
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: '1.8'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        run: mvn clean install
+        
+  store-artifact:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: '1.8'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        run: mvn clean install
+      - name: Store artifact
+        run: echo "Hello World!"
+        
+  approval:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: MS Teams Action
+  # You may pin to the exact commit or the version.
+  # uses: FTsbrown/msteams-action@43cfa1a2ff5cf972b73616cec806792c88a85ff8
+        uses: FTsbrown/msteams-action@v1.0.1
+        with:
+    # Title of the message
+          TITLE: approval of dev workflow
+    # Body of the message
+          BODY: please approve the workflow
+    # If set, A MS Teams notification will be sent to this webhook
+          MS_TEAMS_WEBHOOK: https://oge4.webhook.office.com/webhookb2/25189a29-6fae-4d60-8046-ff44234cf175@b6ef53c4-f4aa-4ae4-9e6e-e93e9610bfd3/IncomingWebhook/af44140c6df74981841ab5a8da4d4949/49e6f35b-4b49-40ce-bccf-072c32d72370
+
+  deploy:
+    name: deploy to dev
+    
+    runs-on: ubuntu-latest
+    needs: approval
+    environment: 
+        name: dev
+    steps:
+      - name: Issues - Manual Workflow Approval
+  # You may pin to the exact commit or the version.
+  # uses: macnev2013/manual-approval@c613c02a2599519bba066f04e6732f038c65f747
+        uses: macnev2013/manual-approval@v1.0.18
+        with:
+    # Required approvers
+          approvers: https://github.com/Niladri579
+    # Secret
+          secret: ${{ secrets.GITHUB_TOKEN }}
+    # Minimum number of approvals to progress workflow
+          minimum-approvals: 1
+    # Timeout before approval
+          approval-wait: 30 
+  
+
+

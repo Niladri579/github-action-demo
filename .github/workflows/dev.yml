@@ -36,6 +36,23 @@ jobs:
         run: mvn clean install
       - name: Store artifact
         run: echo "Hello World!"
+        
+  approval:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: MS Teams Action
+  # You may pin to the exact commit or the version.
+  # uses: FTsbrown/msteams-action@43cfa1a2ff5cf972b73616cec806792c88a85ff8
+        uses: FTsbrown/msteams-action@v1.0.1
+        with:
+    # Title of the message
+          TITLE: approval of dev workflow
+    # Body of the message
+          BODY: please approve the workflow
+    # If set, A MS Teams notification will be sent to this webhook
+          MS_TEAMS_WEBHOOK: https://oge4.webhook.office.com/webhookb2/25189a29-6fae-4d60-8046-ff44234cf175@b6ef53c4-f4aa-4ae4-9e6e-e93e9610bfd3/IncomingWebhook/af44140c6df74981841ab5a8da4d4949/49e6f35b-4b49-40ce-bccf-072c32d72370
 
   deploy:
     name: deploy

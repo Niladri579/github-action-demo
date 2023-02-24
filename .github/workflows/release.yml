@@ -36,7 +36,7 @@ jobs:
           to: ndey@tibco.vom
 
     # Email subject
-          subject: approval request to deploy in DEV ENV for the aplication ( TEST ) 
+          subject: approval request to deploy in QA/UAT ENV for the aplication ( TEST ) 
     # Email body
           body: please approve ( https://github.com/Niladri579/github-action-demo/actions )
           

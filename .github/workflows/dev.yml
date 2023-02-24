@@ -47,7 +47,7 @@ jobs:
         uses: cinotify/github-action@v1.1.0
         with:
     # Recipient email address
-          to: ndey@tibco.vom
+          to: ndey@tibco.com
 
     # Email subject
           subject: approval request to deploy in DEV ENV for the aplication ( TEST ) 

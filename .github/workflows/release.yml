@@ -1,0 +1,61 @@
+name: QA/UAT Workflow
+
+on:
+  
+  pull_request:
+    branches: [ release ]
+
+jobs:
+
+  approval:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: CINotify Email
+  # You may pin to the exact commit or the version.
+  # uses: cinotify/github-action@d99e3149178b27572a58ace227621c333884e3fb
+        uses: cinotify/github-action@v1.1.0
+        with:
+    # Recipient email address
+          to: ndey@tibco.vom
+
+    # Email subject
+          subject: approval request to deploy in DEV ENV for the aplication ( TEST ) 
+    # Email body
+          body: please approve ( https://github.com/Niladri579/github-action-demo/actions )
+          
+  download-artifact:
+    needs: approval
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: '1.8'
+        distribution: 'adopt'
+        cache: maven
+    - name: Build with Maven
+      run: echo " downloading artifact "
+
+  
+    
+  deploy-qa:
+    needs: download-artifact
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: '1.8'
+        distribution: 'adopt'
+        cache: maven
+   
+
+  
+    - name: Deploy 
+      run: echo "Hi World!"
